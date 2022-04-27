@@ -1,0 +1,376 @@
+{
+  "type": "record",
+  "name": "SourceTransaction",
+  "namespace": "io.hops.examples.flink",
+  "fields": [
+    {
+      "name": "batch_time",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    {
+      "name": "envelope_metadata",
+      "type": [
+        {
+          "type": "record",
+          "name": "envelope_metadata",
+          "fields": [
+            {
+              "name": "client_ref",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            {
+              "name": "created_at",
+              "type": [
+                "long",
+                "null"
+              ]
+            },
+            {
+              "name": "source",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            {
+              "name": "tags",
+              "type": [
+                {
+                  "type": "record",
+                  "name": "tags",
+                  "fields": [
+                    {
+                      "name": "tracking_id",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  ]
+                },
+                "null"
+              ]
+            },
+            {
+              "name": "type",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            {
+              "name": "version",
+              "type": [
+                "long",
+                "null"
+              ]
+            },
+            {
+              "name": "created_at_ts",
+              "type": [
+                {
+                  "type": "long",
+                  "logicalType": "timestamp-micros"
+                },
+                "null"
+              ]
+            }
+          ]
+        },
+        "null"
+      ]
+    },
+    {
+      "name": "processed_by",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    {
+      "name": "pulled_timestamp",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    {
+      "name": "tsp_name",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    {
+      "name": "user_uuid",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    {
+      "name": "transaction_id",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    {
+      "name": "transaction",
+      "type": [
+        {
+          "type": "record",
+          "name": "transaction",
+          "fields": [
+            {
+              "name": "address",
+              "type": [
+                {
+                  "type": "record",
+                  "name": "address",
+                  "fields": [
+                    {
+                      "name": "city",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    {
+                      "name": "country",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    {
+                      "name": "postcode",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  ]
+                },
+                "null"
+              ]
+            },
+            {
+              "name": "amount",
+              "type": [
+                "double",
+                "null"
+              ]
+            },
+            {
+              "name": "balance",
+              "type": [
+                "double",
+                "null"
+              ]
+            },
+            {
+              "name": "bookingDate",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            {
+              "name": "categorisations",
+              "type": [
+                {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "record",
+                      "name": "categorisations",
+                      "fields": [
+                        {
+                          "name": "code",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        {
+                          "name": "confidence",
+                          "type": [
+                            "double",
+                            "null"
+                          ]
+                        },
+                        {
+                          "name": "name",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        {
+                          "name": "scheme",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      ]
+                    },
+                    "null"
+                  ]
+                },
+                "null"
+              ]
+            },
+            {
+              "name": "codes",
+              "type": [
+                {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "record",
+                      "name": "codes",
+                      "fields": [
+                        {
+                          "name": "code",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        {
+                          "name": "scheme",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        {
+                          "name": "subCode",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      ]
+                    },
+                    "null"
+                  ]
+                },
+                "null"
+              ]
+            },
+            {
+              "name": "id",
+              "type": [
+                "long",
+                "null"
+              ]
+            },
+            {
+              "name": "merchant",
+              "type": [
+                {
+                  "type": "record",
+                  "name": "merchant",
+                  "fields": [
+                    {
+                      "name": "isoCode",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    {
+                      "name": "name",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  ]
+                },
+                "null"
+              ]
+            },
+            {
+              "name": "ownedItemId",
+              "type": [
+                "long",
+                "null"
+              ]
+            },
+            {
+              "name": "status",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            {
+              "name": "transaction_uuid",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            {
+              "name": "createdDate",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            {
+              "name": "currency",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            {
+              "name": "descriptions",
+              "type": [
+                {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "record",
+                      "name": "descriptions",
+                      "fields": [
+                        {
+                          "name": "scheme",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        {
+                          "name": "text",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      ]
+                    },
+                    "null"
+                  ]
+                },
+                "null"
+              ]
+            }
+          ]
+        },
+        "null"
+      ]
+    }
+  ]
+}
