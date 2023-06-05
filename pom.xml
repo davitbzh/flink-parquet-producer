@@ -9,21 +9,39 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <flink.version>1.14.3</flink.version>
-        <kafka.version>2.2.0</kafka.version>
-        <jodatime.version>2.10.2</jodatime.version>
+        <hops.version>3.2.0.10-SNAPSHOT</hops.version>
+        <hsfs.version>3.3.0-SNAPSHOT</hsfs.version>
+        <avro.version>1.8.2</avro.version>
+        <java.version>1.8</java.version>
+        <flink.version>1.14.3.1</flink.version>
         <scala.base>2.11</scala.base>
-        <avro.version>1.10.1</avro.version>
-        <hops.version>3.2.0.0-SNAPSHOT</hops.version>
-        <hsfs.version>2.6.0-SNAPSHOT</hsfs.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>${avro.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro-maven-plugin</artifactId>
+            <version>${avro.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.logicalclocks</groupId>
+            <artifactId>hsfs-flink</artifactId>
+            <version>${hsfs.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-streaming-java_${scala.base}</artifactId>
             <version>${flink.version}</version>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.flink</groupId>
@@ -37,6 +55,7 @@
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-kafka_${scala.base}</artifactId>
             <version>${flink.version}</version>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.flink</groupId>
@@ -60,42 +79,15 @@
 
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-statebackend-rocksdb_${scala.base}</artifactId>
-            <version>${flink.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-shaded-hadoop2</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
             <artifactId>flink-parquet_${scala.base}</artifactId>
             <version>${flink.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-table-runtime -->
+        <!-- https://mvnrepository.com/artifact/org.apache.parquet/parquet-tools -->
         <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-table-runtime_${scala.base}</artifactId>
-            <version>${flink.version}</version>
-            <!-- <scope>provided</scope> -->
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-table-runtime -->
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-table-common</artifactId>
-            <version>${flink.version}</version>
-            <!-- <scope>provided</scope> -->
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-avro</artifactId>
-            <version>${flink.version}</version>
+            <groupId>org.apache.parquet</groupId>
+            <artifactId>parquet-tools</artifactId>
+            <version>1.11.1</version>
         </dependency>
 
         <dependency>
@@ -105,43 +97,10 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-table-api-java -->
         <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-table-api-java</artifactId>
-            <version>${flink.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${jodatime.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro</artifactId>
-            <version>${avro.version}</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.parquet/parquet-avro -->
-        <dependency>
-            <groupId>org.apache.parquet</groupId>
-            <artifactId>parquet-avro</artifactId>
-            <version>1.12.2</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.parquet/parquet-tools -->
-        <dependency>
-            <groupId>org.apache.parquet</groupId>
-            <artifactId>parquet-tools</artifactId>
-            <version>1.11.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.logicalclocks</groupId>
-            <artifactId>hsfs</artifactId>
-            <version>${hsfs.version}</version>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
         </dependency>
 
     </dependencies>
@@ -149,24 +108,44 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>io.hops.examples.flink.Main</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>${avro.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                        </goals>
+                        <configuration>
+                            <stringType>String</stringType>
+                            <sourceDirectory>${project.basedir}/src/main/resources/avro/</sourceDirectory>
+                            <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
+            <!-- Maven Compiler Plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.hopsworks.tutorials.ecommerce.click.ClickEventSimulator</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
 
@@ -211,27 +190,22 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.avro</groupId>
-                <artifactId>avro-maven-plugin</artifactId>
-                <version>${avro.version}</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>schema</goal>
-                            <goal>protocol</goal>
-                            <goal>idl-protocol</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
     </build>
 
     <repositories>
+        <repository>
+            <id>apache.snapshots</id>
+            <name>Apache Development Snapshot Repository</name>
+            <url>https://repository.apache.org/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
         <repository>
             <id>Hops</id>
             <name>Hops Repo</name>
@@ -243,6 +217,16 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+
     </repositories>
 
+    <distributionManagement>
+        <repository>
+            <id>Hops</id>
+            <name>Hops Repo</name>
+            <url>https://archiva.hops.works/repository/Hops/</url>
+        </repository>
+    </distributionManagement>
+
 </project>
+

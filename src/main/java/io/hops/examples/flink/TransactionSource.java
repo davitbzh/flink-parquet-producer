@@ -58,9 +58,6 @@ public class TransactionSource implements SourceFunction<Tuple2<String, String>>
         JsonNode jsonNode = objectMapper.readTree(record);
         String event = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNode);
 
-        // TODO (Davit): there is an issue with timestamp conversion
-        //SourceTransaction sourceTransaction = objectMapper.readValue(event, SourceTransaction.class);
-
         // produce an event
         sourceContext.collect(new Tuple2<>(jsonNode.get("user_uuid").asText(), event));
 

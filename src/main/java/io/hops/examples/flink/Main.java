@@ -1,7 +1,6 @@
 package io.hops.examples.flink;
 
 import com.logicalclocks.hsfs.FeatureStoreException;
-import com.logicalclocks.hsfs.HopsworksConnection;
 import com.logicalclocks.hsfs.metadata.HopsworksClient;
 import com.logicalclocks.hsfs.metadata.HopsworksHttpClient;
 
@@ -14,13 +13,11 @@ import org.apache.flink.connector.kafka.sink.KafkaSink;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
-import java.io.IOException;
 import java.util.Properties;
 
 public class Main {
 
-  private static Properties getKafkaProperties(String topic) throws FeatureStoreException, IOException {
-    HopsworksConnection connection = HopsworksConnection.builder().build();
+  private static Properties getKafkaProperties(String topic) throws FeatureStoreException {
     HopsworksHttpClient client = HopsworksClient.getInstance().getHopsworksHttpClient();
     Properties properties = new Properties();
     properties.put("bootstrap.servers", "broker.kafka.service.consul:9091");
